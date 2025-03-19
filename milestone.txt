@@ -1,0 +1,10 @@
+USE milestone;
+
+SELECT DISTINCT u.* FROM users AS u JOIN medias AS m ON u.id = m.user_id WHERE m.type = 'video';
+SELECT p.* FROM posts AS p LEFT JOIN likes AS l ON p.id = l.post_id WHERE l.post_id IS NULL;
+SELECT DISTINCT p.id AS post_id, COUNT(l.user_id) AS tot_likes FROM posts AS p LEFT JOIN likes l ON p.id = l.post_id GROUP BY p.id;
+
+SELECT u.id AS user_id, u.username, COUNT(m.id) AS total_medias FROM users AS u LEFT JOIN medias m ON u.id = m.user_id GROUP BY u.id ORDER BY total_medias DESC;
+
+SELECT u.id AS user_id, u.username, COUNT(l.user_id) AS total_likes_rec FROM users u JOIN posts p ON u.id = p.user_id
+LEFT JOIN likes l ON p.id = l.post_id GROUP BY u.id ORDER BY total_likes_rec;
